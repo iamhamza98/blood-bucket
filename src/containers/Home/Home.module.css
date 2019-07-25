@@ -1,0 +1,27 @@
+.Home {
+	margin-top: 64px;
+}
+
+.Welcome {
+	display: block;
+}
+
+.Logo {
+	text-align: center;
+}
+
+.Headline {
+	text-align: center;
+	display: block;
+	margin-top: 20px;
+}
+
+.Head1,
+.Head2 {
+	display: block;
+	color: #e2001a;
+}
+
+.Head2 {
+	color: #7f797f;
+}
