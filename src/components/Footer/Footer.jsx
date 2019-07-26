@@ -5,7 +5,7 @@ import styles from "./Footer.module.css";
 const Footer = props => {
 	return (
 		<div className={styles.Footer}>
-			<Grid container sm={12}>
+			<Grid container>
 				<Grid item sm={12} className={styles.Footer1Row}>
 					<Typography className={styles.Title} variant="h3" color="inherit">
 						bloodbucket
@@ -19,7 +19,7 @@ const Footer = props => {
 					</Typography>
 				</Grid>
 			</Grid>
-			<Grid container sm={12} className={styles.Footer2Row}>
+			<Grid container className={styles.Footer2Row}>
 				<Grid item sm={6}>
 					<div className={styles.Divider} />
 					<Grid container direction="column">

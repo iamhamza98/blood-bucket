@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout/Layout";
-import Home from "./Home/Home";
+//import Home from "./Home/Home";
+import Donate from "./Donate/Donate";
 
 class App extends Component {
 	state = {};
 	render() {
 		return (
 			<Layout>
-				<Home />
+				{/* <Home /> */}
+				<Donate />
 			</Layout>
 		);
 	}

@@ -54,37 +54,37 @@ const NavLinks = props => {
 					<ListItemIcon className={styles.ListIcon}>
 						<Home />
 					</ListItemIcon>
-					<Typography variant="body">home</Typography>
+					<Typography variant="body1">home</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
 						<FlightTakeoff />
 					</ListItemIcon>
-					<Typography variant="body">donate</Typography>
+					<Typography variant="body1">donate</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
 						<FlightLand />
 					</ListItemIcon>
-					<Typography variant="body">receive</Typography>
+					<Typography variant="body1">receive</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
 						<Assessment />
 					</ListItemIcon>
-					<Typography variant="body">recent donations</Typography>
+					<Typography variant="body1">recent donations</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
 						<Accessible />
 					</ListItemIcon>
-					<Typography variant="body">feedback</Typography>
+					<Typography variant="body1">feedback</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
 						<Work />
 					</ListItemIcon>
-					<Typography variant="body">about us</Typography>
+					<Typography variant="body1">about us</Typography>
 				</ListItem>
 			</List>
 			{props.auth ? (
@@ -95,7 +95,7 @@ const NavLinks = props => {
 							<ListItemIcon className={styles.ListIcon}>
 								<AccountBox />
 							</ListItemIcon>
-							<Typography variant="body">you</Typography>
+							<Typography variant="body1">you</Typography>
 						</ListItem>
 					</List>
 				</Fragment>

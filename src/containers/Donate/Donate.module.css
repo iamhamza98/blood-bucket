@@ -1,0 +1,62 @@
+.DonateRoot {
+	margin: 2em 0;
+	color: #e2001a;
+}
+
+.Elligibility {
+	width: 90%;
+	margin: 1em auto;
+	border-bottom: 1px solid #e2001a;
+}
+
+.Elligibility ul {
+	list-style-type: none;
+	color: #7f797f;
+}
+
+.Elligibility li {
+	padding: 0.5em 0;
+	margin: 0.5em 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.StepDark {
+	min-height: 100vh;
+	background-color: #252627;
+}
+
+.StepLight {
+	min-height: 100vh;
+}
+
+.ItemLeft,
+.ItemRight {
+	width: 100%;
+	padding: 0.5em 1em;
+}
+
+.ItemLeft {
+	align-self: flex-end;
+}
+
+.ItemRight {
+	align-self: flex-start;
+}
+
+@media (min-width: 600px) {
+	.ItemLeft,
+	.ItemRight {
+		width: 50%;
+		align-self: unset;
+	}
+
+	.ItemLeft div {
+		text-align: right;
+	}
+
+	.StepDark,
+	.StepLight {
+		align-items: center;
+	}
+}
