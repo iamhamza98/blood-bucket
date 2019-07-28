@@ -58,15 +58,15 @@ const NavLinks = props => {
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
-						<FlightTakeoff />
+						<FlightLand />
 					</ListItemIcon>
-					<Typography variant="body1">donate</Typography>
+					<Typography variant="body1">request</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
-						<FlightLand />
+						<FlightTakeoff />
 					</ListItemIcon>
-					<Typography variant="body1">receive</Typography>
+					<Typography variant="body1">donate</Typography>
 				</ListItem>
 				<ListItem button className={styles.ListItem}>
 					<ListItemIcon className={styles.ListIcon}>
