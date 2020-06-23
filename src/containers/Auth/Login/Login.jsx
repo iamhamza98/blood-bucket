@@ -7,15 +7,16 @@ import {
 	Checkbox,
 	Typography
 } from "@material-ui/core";
-import PropTypes from "prop-types";
 import { withStyles, ThemeProvider } from "@material-ui/styles";
 import { styles, theme } from "./LoginStyles";
 import Loader from "../../../components/UI/Loader/Loader";
+import { firebase } from "../../../api/firebase";
 
 class Login extends Component {
 	state = {
+		user: null,
 		form: {
-			username: {
+			email: {
 				value: "",
 				valid: false
 			},
@@ -25,10 +26,10 @@ class Login extends Component {
 			}
 		},
 		formValid: false,
-		formSubmitted: false,
-		loggedIn: false,
+		loading: false,
 		rememberUser: false,
-		errorLogin: false
+		loginSuccess: false,
+		loginFailure: false
 	};
 
 	credentialChangeHanlder = name => event => {
@@ -42,24 +43,44 @@ class Login extends Component {
 	};
 
 	loginHandler = () => {
-		this.setState({ formSubmitted: true });
-		setTimeout(() => {
-			console.log("Logged In");
-			if (Math.random() > 0.5) this.setState({ loggedIn: true });
-			else this.setState({ errorLogin: true });
-		}, 2000);
+		this.setState({
+			loading: true,
+			formSubmitted: true
+		});
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(
+				this.state.form.email.value,
+				this.state.form.password.value
+			)
+			.then(res => {
+				console.log(res);
+				this.setState({
+					loading: false,
+					user: res.user
+				});
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					loading: false,
+					loginFailure: true
+				});
+			});
 	};
 
 	retryHandler = () => {
 		const form = { ...this.state.form };
 		form.password.value = "";
-		form.username.value = "";
+		form.email.value = "";
 		this.setState({
 			form,
-			formSubmitted: false,
-			loggedIn: false,
+			formValid: false,
+			loading: false,
 			rememberUser: false,
-			errorLogin: false
+			loginSuccess: false,
+			loginFailure: false,
+			user: null
 		});
 	};
 
@@ -68,48 +89,48 @@ class Login extends Component {
 			theme.overrides.MuiOutlinedInput.root.color = "#7f797f";
 		}
 		const { classes } = this.props;
-		const afterSubmission =
-			this.state.formSubmitted && this.state.loggedIn ? (
+		const afterSubmission = this.state.loginFailure ? (
+			<Fragment>
 				<Typography
 					style={{ textAlign: "center" }}
 					color="inherit"
 					variant="body1"
 				>
-					Login successful. Please Proceed
+					Login Failed. Please Retry
 				</Typography>
-			) : this.state.errorLogin ? (
-				<Fragment>
-					<Typography
-						style={{ textAlign: "center" }}
-						color="inherit"
-						variant="body1"
-					>
-						Login Failed. Please Retry
-					</Typography>
-					<Button
-						className={classes.Button}
-						size="large"
-						variant="outlined"
-						onClick={this.retryHandler}
-					>
-						Retry
-					</Button>
-				</Fragment>
-			) : (
-				<div style={{ textAlign: "center" }}>
-					<Loader />
-				</div>
-			);
-		const beforeSubmission = (
+				<Button
+					className={classes.Button}
+					size="large"
+					variant="outlined"
+					onClick={this.retryHandler}
+				>
+					Retry
+				</Button>
+			</Fragment>
+		) : (
+			<Typography
+				style={{ textAlign: "center" }}
+				color="inherit"
+				variant="body1"
+			>
+				Login successful. Please Proceed
+			</Typography>
+		);
+
+		const initial = this.state.loading ? (
+			<div style={{ textAlign: "center" }}>
+				<Loader />
+			</div>
+		) : (
 			<Grid container direction="column">
 				<Grid item>
 					<TextField
 						type="text"
-						label="Username"
-						value={this.state.form.username.value}
+						label="Email"
+						value={this.state.form.email.value}
 						margin="normal"
 						variant="outlined"
-						onChange={this.credentialChangeHanlder("username")}
+						onChange={this.credentialChangeHanlder("email")}
 					/>
 				</Grid>
 				<Grid item>
@@ -149,15 +170,13 @@ class Login extends Component {
 		return (
 			<ThemeProvider theme={theme}>
 				<div className={classes.ReqLoginRoot}>
-					{this.state.formSubmitted ? afterSubmission : beforeSubmission}
+					{this.state.loginFailure || this.state.user
+						? afterSubmission
+						: initial}
 				</div>
 			</ThemeProvider>
 		);
 	}
 }
-
-Login.propTypes = {
-	lightBackground: PropTypes.bool.isRequired
-};
 
 export default withStyles(styles)(Login);

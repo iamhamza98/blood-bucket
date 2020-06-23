@@ -49,5 +49,17 @@ export const styles = {
 			alignSelf: "unset",
 			padding: "1em"
 		}
+	},
+	ItemLeftContent: {
+		"@media(min-width:600px)": {
+			textAlign: "right"
+		}
+	},
+	Rating: {
+		display: "flex",
+		justifyContent: "center",
+		"@media(min-width:600px)": {
+			justifyContent: "flex-end"
+		}
 	}
 };

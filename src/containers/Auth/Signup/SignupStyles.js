@@ -8,29 +8,6 @@ export const theme = createMuiTheme({
 			},
 			colorPrimary: {
 				color: "#7f797f"
-			},
-			colorSecondary: {
-				color: "white"
-			}
-		},
-		MuiTextField: {
-			root: {
-				width: "100%",
-				margin: "1em 0"
-			}
-		},
-		MuiOutlinedInput: {
-			root: {
-				color: "white"
-			},
-			notchedOutline: {
-				borderRadius: 0,
-				borderColor: "#e2001a !important"
-			}
-		},
-		MuiInputLabel: {
-			root: {
-				color: "#e2001a !important"
 			}
 		},
 		MuiButton: {
@@ -54,16 +31,31 @@ export const theme = createMuiTheme({
 				}
 			}
 		},
-		MuiFormControlLabel: {
+		MuiTextField: {
 			root: {
-				color: "#e2001a"
+				width: "100%",
+				margin: "1em 0"
+			}
+		},
+		MuiOutlinedInput: {
+			root: {
+				color: "#7f797f"
+			},
+			notchedOutline: {
+				borderRadius: 0,
+				borderColor: "#e2001a !important"
+			}
+		},
+		MuiInputLabel: {
+			root: {
+				color: "#e2001a !important"
 			}
 		}
 	}
 });
 
 export const styles = {
-	ReqLoginRoot: {
+	SignupRoot: {
 		width: "80%",
 		margin: "0 auto",
 		"@media(min-width:600px)": {
@@ -79,5 +71,3 @@ export const styles = {
 		left: "25%"
 	}
 };
-
-export default styles;

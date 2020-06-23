@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TextField, Button, Grid, Typography } from "@material-ui/core";
 import { ThemeProvider, withStyles } from "@material-ui/styles";
-import { theme, styles } from "./rateDonor";
+import { theme, styles } from "./RateDonorStyles";
 
 class RateDonor extends Component {
 	state = { complaint: "" };
@@ -13,7 +13,7 @@ class RateDonor extends Component {
 		return (
 			<ThemeProvider theme={theme}>
 				<div className={classes.RateRoot}>
-					<Typography style={{ color: "#7f797f" }} variant="body2">
+					<Typography color="primary" variant="body2">
 						Any Complaints or a suggestion?
 						<br />
 						Feel free to drop your thoughts

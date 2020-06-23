@@ -2,6 +2,17 @@ import { createMuiTheme } from "@material-ui/core";
 
 export const theme = createMuiTheme({
 	overrides: {
+		MuiTypography: {
+			colorInherit: {
+				color: "#e2001a"
+			},
+			colorPrimary: {
+				color: "#7f797f"
+			},
+			colorSecondary: {
+				color: "white"
+			}
+		},
 		MuiTextField: {
 			root: {
 				width: "100%"

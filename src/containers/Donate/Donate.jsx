@@ -1,42 +1,66 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { theme, styles } from "./DonateStyles";
+import { connect } from "react-redux";
 import { ThemeProvider } from "@material-ui/styles";
 import { withStyles, Grid, Typography } from "@material-ui/core";
 import Login from "../Auth/Login/Login";
+import { getRequestorData } from "../../store/actions";
+import Loader from "../../components/UI/Loader/Loader";
+import DonorCheckIn from "./DonorCheckIn/DonorCheckIn";
 
 class Donate extends Component {
 	state = {
-		isRef: false,
-		reqPerson: {
-			name: "John Doe",
-			info: "Software Engineer at Fake.Inc",
-			phone: "+92 301 2345678",
-			address: "Fake House No, Fake Street No, Fake Sector, Fake City",
-			social: {
-				facebook: "www.facebook.com/donor",
-				instagram: "www.instagram.com/donor",
-				twitter: "www.twitter.com/donor",
-				snapchat: "www.snapchat.com/donor"
-			}
-		}
+		isRef: false
 	};
+
+	componentDidMount() {
+		this.props.getRequestorData();
+	}
+
 	render() {
 		const { classes } = this.props;
+		const loader = (
+			<div style={{ textAlign: "center" }}>
+				<Loader />
+			</div>
+		);
+		const userInfo = this.props.requestor ? (
+			<Fragment>
+				<Typography color="secondary" variant="body1">
+					Request Originator
+				</Typography>
+				<Typography color="inherit" variant="h4">
+					{this.props.requestor.name}
+				</Typography>
+				<Typography color="secondary" variant="body1">
+					Has donated to {this.props.requestor.donatedTo.length} people
+				</Typography>
+			</Fragment>
+		) : (
+			<Typography color="secondary" variant="body1">
+				Requestor Information will appear here
+			</Typography>
+		);
+
+		const errorInfo = (
+			<Typography color="inherit" variant="body1">
+				{this.props.error}
+			</Typography>
+		);
+
 		const ifRef = this.state.isRef ? null : (
-			<Grid className={classes.StepDark} container justify="space-evenly">
+			<Grid className={classes.StepLight} container justify="space-evenly">
 				<Grid className={classes.ItemLeft} item sm={6}>
-					<div className={classes.ItemLeftContent}>
-						<Typography color="inherit" variant="h4">
-							Login
-						</Typography>
-						<Typography color="secondary" variant="h6">
-							Sign up Instead
-						</Typography>
-					</div>
+					<Typography color="inherit" variant="h4">
+						Log In
+					</Typography>
+					<Typography color="secondary" variant="h6">
+						Sign up Instead
+					</Typography>
 				</Grid>
 				<Grid className={classes.ItemRight} item sm={6}>
 					<div>
-						<Login lightBackground={false} />
+						<Login lightBackground />
 					</div>
 				</Grid>
 			</Grid>
@@ -45,61 +69,28 @@ class Donate extends Component {
 			<ThemeProvider theme={theme}>
 				<div className={classes.DonateRoot}>
 					{ifRef}
-					<Grid className={classes.StepLight} container justify="space-evenly">
-						<Grid className={classes.ItemLeft} item sm={6}>
-							<div className={classes.ItemLeftContent}>
-								<Typography color="primary" variant="body1">
-									Request Originator
-								</Typography>
-								<Typography color="inherit" variant="h4">
-									Name
-								</Typography>
-								<Typography color="primary" variant="h6">
-									Public Information
-									<br />
-									Willing to Pay or not?
-								</Typography>
-							</div>
-						</Grid>
-						<Grid className={classes.ItemRight} item sm={6}>
-							<div>
-								<Typography color="inherit" variant="body1">
-									Map view
-									<br />
-									Accept or deny the request
-								</Typography>
-							</div>
-						</Grid>
-					</Grid>
 					<Grid className={classes.StepDark} container justify="space-evenly">
 						<Grid className={classes.ItemLeft} item sm={6}>
-							<div className={classes.ItemLeftContent}>
-								<Typography color="inherit" variant="h4">
-									Check In
-								</Typography>
-								<Typography color="secondary" variant="h6">
-									X minutes away from Request Originator
-								</Typography>
-							</div>
+							{this.props.loading
+								? loader
+								: this.props.error
+								? errorInfo
+								: userInfo}
 						</Grid>
 						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
-								<Typography color="inherit" variant="body1">
-									Map view | Arrived
-								</Typography>
+								<DonorCheckIn />
 							</div>
 						</Grid>
 					</Grid>
 					<Grid className={classes.StepLight} container justify="space-evenly">
 						<Grid className={classes.ItemLeft} item sm={6}>
-							<div className={classes.ItemLeftContent}>
-								<Typography color="inherit" variant="h4">
-									Finish Donation
-								</Typography>
-								<Typography color="primary" variant="h6">
-									Receive Payment if any
-								</Typography>
-							</div>
+							<Typography color="inherit" variant="h4">
+								Finish Donation
+							</Typography>
+							<Typography color="primary" variant="h6">
+								Receive Payment if any
+							</Typography>
 						</Grid>
 						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
@@ -115,4 +106,21 @@ class Donate extends Component {
 	}
 }
 
-export default withStyles(styles)(Donate);
+const mapStateToProps = state => {
+	return {
+		requestor: state.requestor.requestorData,
+		loading: state.requestor.loading,
+		error: state.requestor.error
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getRequestorData: () => dispatch(getRequestorData())
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(styles)(Donate));

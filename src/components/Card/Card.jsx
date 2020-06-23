@@ -47,7 +47,7 @@ const CardItem = props => {
 	);
 };
 
-Card.propTypes = {
+CardItem.propTypes = {
 	cardTitle: PropTypes.string.isRequired,
 	cardContent: PropTypes.string.isRequired,
 	cardBtnAction: PropTypes.func.isRequired

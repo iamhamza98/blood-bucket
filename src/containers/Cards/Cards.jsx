@@ -40,9 +40,9 @@ class Cards extends Component {
 	render() {
 		return (
 			<div className={styles.Cards}>
-				<Grid container sm={12}>
+				<Grid container>
 					{this.state.cards.map(card => (
-						<Grid item sm={6}>
+						<Grid item sm={6} key={card.title}>
 							<CardItem
 								cardTitle={card.title}
 								cardContent={card.content}

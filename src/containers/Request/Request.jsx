@@ -1,20 +1,23 @@
 import React, { Component } from "react";
-import styles from "./Request.module.css";
+import { connect } from "react-redux";
+import { theme, styles } from "./RequestStyles";
 import { Typography, Grid } from "@material-ui/core";
+import { withStyles, ThemeProvider } from "@material-ui/styles";
 import BloodGroups from "./BloodGroups/BloodGroups";
 import Donor from "./Donor/Donor";
 import Login from "../Auth/Login/Login";
 import RateDonor from "./RateDonor/RateDonor";
 import Rating from "../../components/UI/Rating/Rating";
+import SearchMap from "./SearchMap/SearchMap";
 class Request extends Component {
-	state = {};
 	render() {
+		const { classes } = this.props;
 		console.log("Request.jsx");
 		return (
-			<div className={styles.RequestRoot}>
-				<div className={styles.Request}>
-					<Grid className={styles.StepDark} container justify="space-evenly">
-						<Grid className={styles.ItemLeft} item sm={6}>
+			<ThemeProvider theme={theme}>
+				<div className={classes.RequestRoot}>
+					<Grid className={classes.StepDark} container justify="space-evenly">
+						<Grid className={classes.ItemLeft} item sm={6}>
 							<div>
 								<Typography color="inherit" variant="h4">
 									Log In
@@ -24,14 +27,14 @@ class Request extends Component {
 								</Typography>
 							</div>
 						</Grid>
-						<Grid className={styles.ItemRight} item sm={6}>
+						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
-								<Login lightBackground={false} />
+								<Login />
 							</div>
 						</Grid>
 					</Grid>
-					<Grid className={styles.StepLight} container justify="space-evenly">
-						<Grid className={styles.ItemLeft} item sm={6}>
+					<Grid className={classes.StepLight} container justify="space-evenly">
+						<Grid className={classes.ItemLeft} item sm={6}>
 							<div>
 								<Typography color="inherit" variant="h4">
 									Blood Group
@@ -41,92 +44,96 @@ class Request extends Component {
 								</Typography>
 							</div>
 						</Grid>
-						<Grid className={styles.ItemRight} item sm={6}>
+						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
 								<BloodGroups />
 							</div>
 						</Grid>
 					</Grid>
-					<Grid className={styles.StepDark} container justify="space-evenly">
-						<Grid className={styles.ItemLeft} item sm={6}>
+					<Grid className={classes.StepDark} container justify="space-evenly">
+						<Grid className={classes.ItemLeft} item sm={6}>
 							<div>
 								<Typography color="inherit" variant="h4">
 									Search
 								</Typography>
-								<Typography style={{ color: "white" }} variant="h6">
+								<Typography color="secondary" variant="h6">
 									Nearby Donors
 								</Typography>
 							</div>
 						</Grid>
-						<Grid className={styles.ItemRight} item sm={6}>
+						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
-								<Typography variant="body1">
-									Map displaying "on hold" or "available" donors in the
-									surrounding area
-								</Typography>
+								<SearchMap />
 							</div>
 						</Grid>
 					</Grid>
-					<Grid className={styles.StepLight} container justify="space-evenly">
-						<Grid className={styles.ItemLeft} item sm={6}>
+					<Grid className={classes.StepLight} container justify="space-evenly">
+						<Grid className={classes.ItemLeft} item sm={6}>
 							<div>
 								<Typography color="inherit" variant="h4">
-									Donor Name
+									Request Results
 								</Typography>
-								<Typography style={{ color: "#7f797f" }} variant="h6">
-									Donor Information
+								<Typography color="primary" variant="h6">
+									Viewed By: 0
 								</Typography>
 							</div>
 						</Grid>
-						<Grid className={styles.ItemRight} item sm={6}>
+						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
 								<Donor />
 							</div>
 						</Grid>
 					</Grid>
-					<Grid className={styles.StepDark} container justify="space-evenly">
-						<Grid className={styles.ItemLeft} item sm={6}>
+					<Grid className={classes.StepDark} container justify="space-evenly">
+						<Grid className={classes.ItemLeft} item sm={6}>
 							<div>
 								<Typography color="inherit" variant="h4">
 									Check In
 								</Typography>
-								<Typography style={{ color: "white" }} variant="h6">
+								<Typography color="secondary" variant="h6">
 									Donor X minutes away
 								</Typography>
 							</div>
 						</Grid>
-						<Grid className={styles.ItemRight} item sm={6}>
+						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
-								<Typography variant="body1">
+								<Typography color="secondary" variant="body1">
 									Map displaying distance between donor and receiver
 								</Typography>
 							</div>
 						</Grid>
 					</Grid>
-					<Grid className={styles.StepLight} container justify="space-evenly">
-						<Grid className={styles.ItemLeft} item sm={6}>
+					<Grid className={classes.StepLight} container justify="space-evenly">
+						<Grid className={classes.ItemLeft} item sm={6}>
 							<div>
 								<Typography color="inherit" variant="h4">
 									Finished
 								</Typography>
-								<Typography style={{ color: "#7f797f" }} variant="h6">
+								<Typography color="primary" variant="h6">
 									Rate Donor
 								</Typography>
-								<div className={styles.Rating}>
+								<div className={classes.Rating}>
 									<Rating />
 								</div>
 							</div>
 						</Grid>
-						<Grid className={styles.ItemRight} item sm={6}>
+						<Grid className={classes.ItemRight} item sm={6}>
 							<div>
 								<RateDonor />
 							</div>
 						</Grid>
 					</Grid>
 				</div>
-			</div>
+			</ThemeProvider>
 		);
 	}
 }
 
-export default Request;
+const mapStateToProps = state => {
+	return {
+		currentUser: state.login.user,
+		bloodgroup: state.bloodgroup.reqBloodgroup
+	};
+};
+
+export default connect(mapStateToProps)(withStyles(styles)(Request));
